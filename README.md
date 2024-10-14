@@ -19,7 +19,7 @@ SwiftSkeleton is a mobile app skeleton generator in Swift using the MVP architec
 1. Clone this GitHub repository:
 
     ```bash
-    git clone https://github.com/your-username/SwiftSkeleton.git
+    git clone https://github.com/squall09s/SwiftSkeleton.git
     ```
 
 2. Navigate to the project directory:
