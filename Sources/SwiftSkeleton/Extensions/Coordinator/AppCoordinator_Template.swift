@@ -26,14 +26,14 @@ class AppCoordinator_Template {
     func defaultFlow() -> String? {
         
         if let defaultFlow = self.coordinatorConfiguration.flows.first(where: { _flow in
-            _flow.name == self.coordinatorConfiguration.defaultFlow
+            _flow.id == self.coordinatorConfiguration.defaultFlow
         }){
             
-            return defaultFlow.name
+            return defaultFlow.id
             
         } else {
             
-            return self.coordinatorConfiguration.flows.first?.name
+            return self.coordinatorConfiguration.flows.first?.id
             
         }
         
@@ -54,7 +54,7 @@ class AppCoordinator_Template {
         
         
         let cases = self.coordinatorConfiguration.flows.compactMap({_flow in
-            return (self.coordinatorConfiguration.initals ?? []).contains([_flow.name])  ? "case \(_flow.name)" : nil }
+            return (self.coordinatorConfiguration.initals ?? []).contains([_flow.id])  ? "case \(_flow.id)" : nil }
         ).joined(separator: "\n")
         
         result = result.replacingOccurrences(of: "--#enumCases#--",
@@ -69,7 +69,7 @@ fileprivate extension CoordinatorConfiguration {
     
     func generateEnum() -> String {
         return self.flows.compactMap({ _flow in
-            return (self.initals ?? []).contains([_flow.name])  ?  _flow.generateEnum() : nil
+            return (self.initals ?? []).contains([_flow.id])  ?  _flow.generateEnum() : nil
         }).joined(separator: "\n")
         
     }
@@ -84,12 +84,12 @@ fileprivate extension Coordinator {
             
         case .navigationController:
             return """
-                    case .\(self.name):
+                    case .\(self.id):
                         return \(self.fileName())(navigationController: UINavigationController())
                     """
         case .tabbarController:
             return """
-                    case .\(self.name):
+                    case .\(self.id):
                         return \(self.fileName())(tabBarController:  UITabBarController())
                     """
         }

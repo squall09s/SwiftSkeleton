@@ -41,7 +41,7 @@ Once the project is compiled, you can run SwiftSkeleton from the command line to
 Example command:
 
     ```bash
-    .build/release/SwiftSkeleton path/to/your-json-file.json
+    .build/release/SwiftSkeleton ./Example/ExampleApp/config.json 
     ```
     
 ## Generated Structure

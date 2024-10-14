@@ -39,13 +39,12 @@ struct Action: Codable {
 struct ModuleConfiguration: Codable {
     
     let id: String
-    let name: String?
     let extensions : [ModuleExtension]?
     
     let actions : [Action]?
     
     func identifier() -> String {
-        let str = (name ?? id)
+        let str = id
         return str.prefix(1).capitalized + str.dropFirst()
     }
     
@@ -68,13 +67,14 @@ enum CoordinatorType : String, Codable {
 }
 
 struct Coordinator : Codable {
-    let name: String
+    
+    let id: String
     let type: CoordinatorType
     let root : String?
     let childs: [String]?
     
     func identifier() -> String {
-        return name.prefix(1).capitalized + name.dropFirst()
+        return id.prefix(1).capitalized + id.dropFirst()
     }
     
     func fileName() -> String {

@@ -108,10 +108,13 @@ fileprivate extension Action {
 """
             }else{
                 
+                let destinationID = destination.prefix(1).capitalized + destination.dropFirst()
+                
                 return
 """
         func handle\(self.Verb())Action() {
-            self.coordinator?.goTo\(destination)()
+    
+            self.coordinator?.goTo\(destinationID)()
         }
 """
                 
