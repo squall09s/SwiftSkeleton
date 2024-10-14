@@ -2,7 +2,7 @@
 //  TypeFile.swift
 //  SwiftSkeleton
 //
-//  Created by Nicolas Laurent on 10/10/2024.
+//  Created with enthusiasm 😺 on 10/10/2024.
 //
 
 import Foundation

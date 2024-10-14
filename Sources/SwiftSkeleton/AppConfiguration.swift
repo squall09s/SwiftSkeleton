@@ -2,7 +2,7 @@
 //  AppConfiguration.swift
 //  SwiftSkeleton
 //
-//  Created by Nicolas Laurent on 12/09/2024.
+//  Created with enthusiasm 😺 on 12/09/2024.
 //
 
 import Foundation

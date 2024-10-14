@@ -42,7 +42,7 @@ Example command:
 
     ```bash
     .build/release/SwiftSkeleton path/to/your-json-file.json
-     ```
+    ```
     
 ## Generated Structure
 

@@ -1,8 +1,8 @@
 //
-//  ExamplePresenter.swift
+//  TabBarControllerCoordinator.swift
 //  --#projectName#--
 //
-//  Created by Nicolas Laurent on 12/09/2024.
+//  Created with SwiftSkeleton 🦴
 //
 
 import UIKit

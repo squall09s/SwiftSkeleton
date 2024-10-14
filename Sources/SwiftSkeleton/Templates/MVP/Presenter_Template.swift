@@ -2,7 +2,7 @@
 //  Presenter_Template.swift
 //  SwiftSkeleton
 //
-//  Created by Nicolas Laurent on 17/09/2024.
+//  Created with enthusiasm 😺 on 17/09/2024.
 //
 
 import Foundation

@@ -1,0 +1,64 @@
+{
+    "project_name": "ExampleApp",
+    "author" : "Skeleton",
+    "modules": [
+        {
+            "id": "homeDisconnected",
+            "actions": [
+                {
+                    "sender": "button",
+                    "label": "Go LogIn",
+                    "destination": "logIn"
+                }, {
+                    "sender": "button",
+                    "label": "Create account",
+                    "destination": "register"
+                }
+            ]
+        },{
+            "id": "logIn",
+            "actions": [
+                {
+                    "sender": "button",
+                    "label": "Next"
+                }
+            ]
+        }, {
+            "id": "register",
+            "actions": [
+                {
+                    "sender": "button",
+                    "label": "Next",
+                    "destination" : "flow:connected"
+                }
+            ]
+        }
+    ],
+    "api": {
+        "module": "api@conducteur"
+    },
+    "coordinators": {
+        "flows": [
+            {
+                "name": "connected",
+                "type" : "tabbarController",
+                "childs": [
+                    "posts",
+                    "users",
+                    "photos"
+                ]
+            },
+            {
+                "name": "disconnected",
+                "type" : "navigationController",
+                "root" : "homeDisconnected",
+                "childs": [
+                    "logIn",
+                    "register"
+                ]
+            }
+        ],
+        "initals" : ["connected", "disconnected"],
+        "defaultFlow" : "disconnected"
+    }
+}

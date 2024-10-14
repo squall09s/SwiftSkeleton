@@ -2,7 +2,7 @@
 //  NavigationControllerCoordinator_Template.swift
 //  SwiftSkeleton
 //
-//  Created by Nicolas Laurent on 11/10/2024.
+//  Created with enthusiasm 😺 on 11/10/2024.
 //
 
 import Foundation

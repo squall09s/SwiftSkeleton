@@ -2,10 +2,52 @@
 //  AppCoordinator.swift
 //  --#projectName#--
 //
-//  Created by Nicolas Laurent on 12/09/2024.
+//  Created with SwiftSkeleton 🦴 
 //
 
 import UIKit
+
+class Coordinator: AnyObject {
+    
+    weak var parentCoordinator: Coordinator?
+    
+    func rootViewController() -> UIViewController? {
+        return nil
+    }
+    
+    func start(){
+        
+    }
+    
+    func navigate(to destination: Coordinator){
+        
+        destination.start()
+        
+        if let destinationRootViewController = destination.rootViewController(){
+            destinationRootViewController.modalPresentationStyle = .fullScreen
+            self.rootViewController()?.present(destinationRootViewController, animated: true)
+        }
+        
+    }
+    
+    func finish(){
+        self.parentCoordinator = nil
+        self.rootViewController()?.dismiss(animated: true)
+    }
+    
+    func back(){
+        
+        if let  nav = rootViewController() as? UINavigationController, nav.viewControllers.count > 1 {
+            nav.popViewController(animated: true)
+        }else {
+            finish()
+        }
+          
+    }
+    
+    
+}
+
 
 enum AppCoordinatorChild {
     
