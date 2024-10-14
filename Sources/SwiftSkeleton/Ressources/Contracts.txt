@@ -1,0 +1,27 @@
+//
+//  ExamplePresenter.swift
+//  --#projectName#--
+//
+//  Created by Nicolas Laurent on 12/09/2024.
+//
+
+import Foundation
+
+struct --#viewModelFileName#-- {
+    let title: String
+    let description: String
+}
+
+// View -> Presenter
+protocol --#presenterProtocolFileName#-- : AnyObject {
+    func viewDidLoad()
+--#actions#--
+}
+
+// Presenter -> View
+protocol --#viewProtocolFileName#-- : AnyObject {
+    func displayTitle(_ title: String)
+}
+
+// Optionally, you could have a Model -> Presenter contract here if needed
+

@@ -1,0 +1,42 @@
+//
+//  ViewController.swift
+//  --#projectName#--
+//
+//  Created by SwiftSkeleton
+//
+
+import UIKit
+
+class --#fileName#-- : UIViewController {
+    
+    var presenter: --#presenterProtocolFileName#--?
+
+    --#tableViewDeclaration#--
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        presenter?.viewDidLoad()
+    }
+    
+    private func setupUI() {
+
+    --#tableViewCellRegister#--
+    
+    }
+}
+
+extension --#fileName#-- : --#viewProtocolFileName#-- {
+    
+    func displayTitle(_ title: String) {
+        
+    }
+    
+}
+
+/// IBAction
+extension --#fileName#-- {
+    --#actions#--
+}
+
+--#tableViewExtension#--

@@ -1,0 +1,19 @@
+//
+//  ExamplePresenter.swift
+//  --#projectName#--
+//
+//  Created by Nicolas Laurent on 12/09/2024.
+//
+
+import UIKit
+
+class --#fileName#-- {
+    static func build(model : --#viewModelFileName#----#extensionCoordinator#--) -> --#viewFileName#-- {
+        let storyboard = UIStoryboard(name: "--#storyboardFileName#--", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "--#storyboardIdentifier#--") as! --#viewFileName#--
+        let presenter = --#presenterFileName#--(view: vc, model : model)
+        --#coordinator_assignation#--
+        vc.presenter = presenter
+        return vc
+    }
+}

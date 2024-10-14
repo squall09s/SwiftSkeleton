@@ -1,0 +1,43 @@
+//
+//  ExamplePresenter.swift
+//  --#projectName#--
+//
+//  Created by Nicolas Laurent on 12/09/2024.
+//
+
+import UIKit
+
+
+import UIKit
+
+class --#fileName#--: Coordinator {
+    
+   
+    var tabBarController: UITabBarController
+
+    --#tabsDeclarations#--
+
+    init(tabBarController: UITabBarController = UITabBarController()) {
+        self.tabBarController = tabBarController
+    }
+    
+    override func rootViewController() -> UIViewController? {
+        return self.tabBarController
+    }
+
+    override func start() {
+        setupTabBarController()
+    }
+
+    
+    private func setupTabBarController() {
+        // Initialiser les deux coordinators pour les onglets
+        
+        --#tabsInitialization#--
+
+        // Configurer le TabBarController avec les ViewControllers
+        tabBarController.viewControllers = [--#tabsAssignment#--].compactMap{$0}
+
+    }
+    
+}

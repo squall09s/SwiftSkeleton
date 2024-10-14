@@ -1,0 +1,26 @@
+//
+//  AppCoordinator.swift
+//  --#projectName#--
+//
+//  Created by Nicolas Laurent on 12/09/2024.
+//
+
+import UIKit
+
+class --#fileName#--: Coordinator {
+    
+    var navigationController: UINavigationController
+    
+    init(navigationController: UINavigationController = UINavigationController()) {
+        self.navigationController = navigationController
+    }
+    
+    override func rootViewController() -> UIViewController? {
+        return self.navigationController
+    }
+    
+    --#rootInitialization#--
+    
+    --#childsInitialization#--
+    
+}

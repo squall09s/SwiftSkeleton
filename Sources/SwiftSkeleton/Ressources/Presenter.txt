@@ -1,0 +1,32 @@
+//
+//  ExamplePresenter.swift
+//  --#projectName#--
+//
+//  Created by Nicolas Laurent on 12/09/2024.
+//
+
+import Foundation
+
+class --#fileName#-- {
+    
+    weak var view: --#viewProtocolFileName#--?
+    var model: --#viewModelFileName#--?
+--#coordinator#--
+    
+    init(view: --#viewProtocolFileName#--, model: --#viewModelFileName#--) {
+        self.view = view
+        self.model = model
+    }
+}
+
+extension --#fileName#--: --#presenterProtocolFileName#-- {
+    
+    func viewDidLoad() {
+        guard let model = model else { return }
+        view?.displayTitle(model.title)
+    }
+
+--#actions#--
+    
+
+}
