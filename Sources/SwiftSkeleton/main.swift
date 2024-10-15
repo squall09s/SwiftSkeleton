@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 guard CommandLine.argc > 1 else {
     print("Error : Usage: \(CommandLine.arguments[0]) <config.json>")
     exit(1)
@@ -21,33 +20,35 @@ let parentDirectory = jsonFileURL.deletingLastPathComponent()
 
 let fileManager = FileManager.default
 
-do {
+@MainActor func generateProject(){
     
-    let jsonData = try Data(contentsOf: jsonFileURL)
-    
-    let decoder = JSONDecoder()
-    let config = try decoder.decode(AppConfiguration.self, from: jsonData)
-    
-    
-    for module in config.modules {
+    do {
         
-        let coordinator = config.coordinators?.flows.first(where: { _coordinator in
-            return  _coordinator.root == module.id || (_coordinator.childs ?? [] ).contains([module.id])
-        })
+        let jsonData = try Data(contentsOf: jsonFileURL)
         
-        createModuleFiles(module : module, appExtensions: AppExtensions(coordinator: coordinator), projectName : config.project_name)
+        let decoder = JSONDecoder()
+        let config = try decoder.decode(AppConfiguration.self, from: jsonData)
+        
+        for module in config.modules {
+            
+            let coordinator = config.coordinators?.flows.first(where: { _coordinator in
+                return  _coordinator.root == module.id || (_coordinator.childs ?? [] ).contains([module.id])
+            })
+            
+            createModuleFiles(module : module, appExtensions: AppExtensions(coordinator: coordinator), projectName : config.project_name)
+        }
+        
+        if let coordinator = config.coordinators {
+            createAppCoordinatorFiles(appConfig: config)
+        }
+        
+       createCoordinatorChildsFiles(appConfig: config)
+        
+         
+    } catch {
+        print("Erreur lors de la lecture ou du décodage du fichier JSON: \(error)")
     }
     
-    if let coordinator = config.coordinators {
-        createFichiersCoordinator(coordinatorconfig: coordinator, projectName: config.project_name)
-    }
-    
-   createFichiersCoordinatorChilds(appConfig: config)
-    
-    
-    
-} catch {
-    print("Erreur lors de la lecture ou du décodage du fichier JSON: \(error)")
 }
 
 @MainActor func createModuleFiles(module : ModuleConfiguration, appExtensions: AppExtensions, projectName: String){
@@ -94,13 +95,17 @@ do {
 
 /// EXTENSION COORDINATOR
 ///
-@MainActor func createFichiersCoordinator(coordinatorconfig : CoordinatorConfiguration, projectName: String){
+@MainActor func createAppCoordinatorFiles(appConfig : AppConfiguration){
     
-    try? fileManager.createDirectory(at: parentDirectory.appending(path: "/" + projectName + "/Coordinators/"), withIntermediateDirectories: true)
+    guard let coordinator = appConfig.coordinators else {
+        return
+    }
     
-    let filePath = parentDirectory.appending(path:  "/" + projectName + "/Coordinators/AppCoordinator.swift" )
+    try? fileManager.createDirectory(at: parentDirectory.appending(path: "/" + appConfig.project_name + "/Coordinators/"), withIntermediateDirectories: true)
     
-    let template = AppCoordinator_Template(coordinatorConfiguration: coordinatorconfig, projectName: projectName)
+    let filePath = parentDirectory.appending(path:  "/" + appConfig.project_name + "/Coordinators/AppCoordinator.swift" )
+    
+    let template = AppCoordinator_Template(coordinatorConfiguration: coordinator, projectName: appConfig.project_name)
      
     if let data = template.export().data(using: .utf8) {
         
@@ -113,7 +118,7 @@ do {
             // Write data to file
             try data.write(to: filePath)
             
-            print("AppCordinator successfully created with \(coordinatorconfig.initals?.count ?? 0) root coordinators.")
+            print("AppCordinator successfully created with \(coordinator.initals?.count ?? 0) root coordinators.")
             
         } catch {
             print("Error creating file : \(error)")
@@ -127,7 +132,7 @@ do {
 
 
 
-@MainActor func createFichiersCoordinatorChilds(appConfig : AppConfiguration){
+@MainActor func createCoordinatorChildsFiles(appConfig : AppConfiguration){
     
     
     for coordinator in appConfig.coordinators?.flows ?? [] {
