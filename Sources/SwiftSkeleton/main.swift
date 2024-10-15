@@ -38,13 +38,10 @@ let fileManager = FileManager.default
             createModuleFiles(module : module, appExtensions: AppExtensions(coordinator: coordinator), projectName : config.project_name)
         }
         
-        if let coordinator = config.coordinators {
-            createAppCoordinatorFiles(appConfig: config)
-        }
+        createAppCoordinatorFiles(appConfig: config)
+        createCoordinatorChildsFiles(appConfig: config)
         
-       createCoordinatorChildsFiles(appConfig: config)
         
-         
     } catch {
         print("Erreur lors de la lecture ou du décodage du fichier JSON: \(error)")
     }
@@ -106,7 +103,7 @@ let fileManager = FileManager.default
     let filePath = parentDirectory.appending(path:  "/" + appConfig.project_name + "/Coordinators/AppCoordinator.swift" )
     
     let template = AppCoordinator_Template(coordinatorConfiguration: coordinator, projectName: appConfig.project_name)
-     
+    
     if let data = template.export().data(using: .utf8) {
         
         do {
@@ -159,7 +156,7 @@ let fileManager = FileManager.default
                 do {
                     
                     //if fileManager.fileExists(atPath: filePath.path()) {
-                        //print("The file already exists, it will be replaced.")
+                    //print("The file already exists, it will be replaced.")
                     //}
                     
                     // Write data to file
@@ -199,7 +196,7 @@ let fileManager = FileManager.default
             let template = TabbarControllerCoordinator_Template(coordinator: coordinator, projectName: appConfig.project_name, tabs: tabsConfigurations)
             
             try? fileManager.createDirectory(at: parentDirectory.appending(path: "/" + appConfig.project_name + "/Coordinators/"), withIntermediateDirectories: true)
-                                             
+            
             var filePath = parentDirectory.appending(path: "/" + appConfig.project_name + "/Coordinators/")
             filePath = filePath.appending(path: template.fileName() + TypeFile.tabBarCoordinator.fileExtension())
             
@@ -208,7 +205,7 @@ let fileManager = FileManager.default
                 do {
                     
                     //if fileManager.fileExists(atPath: filePath.path()) {
-                        //print("The file already exists, it will be replaced.")
+                    //print("The file already exists, it will be replaced.")
                     //}
                     
                     // Write data to file

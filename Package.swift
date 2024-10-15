@@ -19,5 +19,10 @@ let package = Package(
                         .process("Ressources/")
                 ]
             ),
+            .testTarget(
+                name: "SwiftSkeletonTests",
+                dependencies: ["SwiftSkeleton"],
+                path: "Tests"
+            ),
     ]
 )
