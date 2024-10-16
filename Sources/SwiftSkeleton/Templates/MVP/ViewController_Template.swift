@@ -130,11 +130,16 @@ fileprivate extension ModuleConfiguration {
 fileprivate extension Action {
     
     func generateControllerCode() -> String {
-        return
-"""
-    @IBAction func button\(self.Verb())Clicked(_ sender: UIButton) {
-        self.presenter?.handle\(self.Verb())Action()
-    }
-"""
+        
+        
+            
+            return
+    """
+        @IBAction func button\(self.Verb())Clicked(_ sender: UIButton) {
+            self.presenter?.handle\(self.Verb())Action()
+        }
+    """
+          
+        
     }
 }

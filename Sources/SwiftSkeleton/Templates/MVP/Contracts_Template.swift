@@ -66,7 +66,12 @@ fileprivate extension ModuleConfiguration {
 fileprivate extension Action {
     
     func generatePresenterCode() -> String {
-        return "func handle\(self.Verb())Action()"
+        
+        if destination == "back" {
+            return "func handleBackAction()"
+        }else{
+            return "func handle\(self.Verb())Action()"
+        }
     }
 }
 

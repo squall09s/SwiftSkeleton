@@ -32,7 +32,7 @@ class Presenter_template : ModuleTemplate {
     func export() -> String {
         
         var extensionCoordinator : String = ""
-                
+        
         if let extensions, let coordinator = extensions.coordinator {
             if case .navigationController = coordinator.type {
                 extensionCoordinator = "var coordinator : \(coordinator.fileName())?"
@@ -84,40 +84,38 @@ fileprivate extension Action {
         
         if let destination {
             
-            if destination == "back" {
-                
-                return
-"""
-        func handleBackAction() {
-            self.coordinator?.back()
-        }
-"""
+            if destination.hasPrefix("flow") {
                 
                 
-            } else if destination.hasPrefix("flow") {
-                
-            
                 var destinationID = destination.replacingOccurrences(of: "flow:", with: "")
                 destinationID = destinationID.prefix(1).capitalized + destinationID.dropFirst()
-            
+                
                 return
 """
         func handle\(self.Verb())Action() {
             self.coordinator?.navigate(to: \(destinationID)Coordinator())
         }
 """
+            }else if destination == "back"{
+                
+                return
+"""
+                func handle\(self.Verb())Action() {
+                    self.coordinator?.back()
+                }
+"""
+                
             }else{
                 
                 let destinationID = destination.prefix(1).capitalized + destination.dropFirst()
                 return
-"""
-        func handle\(self.Verb())Action() {
-            self.coordinator?.goTo\(destinationID)()
-        }
-"""
-                
+    """
+            func handle\(self.Verb())Action() {
+                self.coordinator?.goTo\(destinationID)()
             }
+    """
             
+            }
             
             
         }else{

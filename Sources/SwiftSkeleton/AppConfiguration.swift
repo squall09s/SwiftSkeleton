@@ -53,11 +53,27 @@ struct Action: Codable {
     
     let sender : ActionSender
     let destination: String?
-    let label: String
+    let label: String?
     
     func Verb() -> String {
-        let result = self.label.capitalized.sanitizeForSwiftKeyword()
+        
+        let _label : String
+        
+        if let destination {
+            
+            if destination == "back" {
+                _label = destination
+            }else{
+                _label = label ?? ("goTo" + destination)
+            }
+            
+        }else{
+            _label = label ?? "action"
+        }
+        
+        let result = _label.capitalized.sanitizeForSwiftKeyword()
         return result.prefix(1).capitalized + result.dropFirst()
+        
     }
 
 }
