@@ -35,7 +35,7 @@ class Storyboard_Template: ModuleTemplate {
     func tableViewCode(id : String) -> String {
         return """
         <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="\(id)">
-                                        <rect key="frame" x="52" y="285" width="240" height="128"/>
+                                        <rect key="frame" x="0" y="285" width="393" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <connections>
@@ -141,7 +141,7 @@ fileprivate extension Action {
         return """
 
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="\(generateStoryboardID())">
-                                    <rect key="frame" x="10" y="\(50 + index * 50)" width="300" height="35"/>
+                                    <rect key="frame" x="0" y="\(50 + index * 50)" width="393" height="35"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="\(self.Verb())"/>
                                     <buttonConfiguration key="configuration" style="plain" title="\(self.Verb())"/>

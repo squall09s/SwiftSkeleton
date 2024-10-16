@@ -87,6 +87,7 @@ class ProjectGenerator {
                     
                     // Write data to file
                     try data.write(to: filePath)
+                    
                     //print("File successfully created at \(filePath)")
                 } catch {
                     print("Error creating file : \(error)")
@@ -142,16 +143,28 @@ class ProjectGenerator {
 
     func createCoordinatorChildsFiles(appConfig : AppConfiguration){
         
-        
         for coordinator in appConfig.coordinators?.flows ?? [] {
             
             switch coordinator.type {
                 
             case .navigationController:
                 
-                let moduleRoot = appConfig.modules.first(where: { $0.id == coordinator.root ?? "" })!
-                let modulesChilds = coordinator.childs?.compactMap({ _childID in
-                    return appConfig.modules.first(where: { $0.id == _childID })
+                guard let moduleRoot = appConfig.modules.first(where: { $0.id == coordinator.root ?? "" }) else{
+                    print("error 💥 : module {\(coordinator.root ?? "")} not found")
+                    return
+                }
+                
+                let modulesChilds : [ModuleConfiguration] = coordinator.childs?.compactMap({ _childID in
+                    
+                    let result = appConfig.modules.first(where: { $0.id == _childID })
+                    
+                    if result == nil {
+                        print("error 💥 : child {\(_childID)} is unkwon")
+                    }
+                    
+                    return result
+                    
+                    
                 }) ?? []
                 
                 let template = NavigationControllerCoordinator_Template(coordinator: coordinator, projectName: appConfig.project_name, root: moduleRoot, childs: modulesChilds)
@@ -190,15 +203,18 @@ class ProjectGenerator {
                     
                     if childIdentifier.hasPrefix("flow:") {
                         
-                        if let _coordinator = appConfig.coordinators?.flows.first(where: { $0.identifier() == String(childIdentifier.split(separator: ":").last!) }){
+                        let _childIdentifier = String(childIdentifier.split(separator: ":").last!)
+                        
+                        if let _coordinator = appConfig.coordinators?.flows.first(where: { $0.id == _childIdentifier }){
                             tabsConfigurations.append( .coordinator(coordinator: _coordinator) )
+                        }else{
+                            print("error 💥 : coordinator {\(_childIdentifier)} not found")
                         }
                         
                     }else{
                         
-                        if let module = appConfig.modules.first(where: { $0.id == childIdentifier }){
-                            tabsConfigurations.append( .module(module : module) )
-                        }
+                        print("error 💥 : TabBarCoordinator support only flow on childs")
+                        
                         
                     }
                     
@@ -232,5 +248,8 @@ class ProjectGenerator {
             }
         }
     }
+    
+   
+
 
 }

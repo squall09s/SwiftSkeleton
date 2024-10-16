@@ -32,7 +32,7 @@ class Presenter_template : ModuleTemplate {
     func export() -> String {
         
         var extensionCoordinator : String = ""
-        
+                
         if let extensions, let coordinator = extensions.coordinator {
             if case .navigationController = coordinator.type {
                 extensionCoordinator = "var coordinator : \(coordinator.fileName())?"
@@ -109,11 +109,9 @@ fileprivate extension Action {
             }else{
                 
                 let destinationID = destination.prefix(1).capitalized + destination.dropFirst()
-                
                 return
 """
         func handle\(self.Verb())Action() {
-    
             self.coordinator?.goTo\(destinationID)()
         }
 """

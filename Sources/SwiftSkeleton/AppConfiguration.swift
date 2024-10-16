@@ -13,6 +13,31 @@ struct AppConfiguration: Codable {
     let author : String?
     let modules: [ModuleConfiguration]
     let coordinators : CoordinatorConfiguration?
+    
+    func allCoordinators() -> [Coordinator] {
+        var coordinators = self.coordinators?.flows ?? []
+        let coordiantorsIds: [String] = coordinators.compactMap({$0.id})
+                               
+        // pour tous les coordinators de type tabbar
+        for coordinator in coordinators.compactMap({ $0.type == .tabbarController ? $0 : nil
+        })  {
+            
+            //on check pour tous les childs,
+            for currentChildInTabBar in coordinator.childs ?? [] {
+                
+                if currentChildInTabBar.hasPrefix("flow:") == false && coordiantorsIds.contains([currentChildInTabBar]) == false {
+                    
+                    coordinators.append(Coordinator(id: currentChildInTabBar,
+                                                    type: .navigationController,
+                                                    root: currentChildInTabBar,
+                                                    childs: []))
+                    
+                }
+                
+            }
+        }
+        return coordinators
+    }
 }
 
 enum ModuleExtension : String, Codable {
@@ -31,9 +56,10 @@ struct Action: Codable {
     let label: String
     
     func Verb() -> String {
-        let result = self.label.capitalized.replacingOccurrences(of: " ", with: "")
+        let result = self.label.capitalized.sanitizeForSwiftKeyword()
         return result.prefix(1).capitalized + result.dropFirst()
     }
+
 }
 
 struct ModuleConfiguration: Codable {
@@ -86,4 +112,27 @@ struct Coordinator : Codable {
         }
     }
     
+}
+
+
+extension String {
+    func sanitizeForSwiftKeyword() -> String {
+        // Supprimer les caractères invalides
+        let sanitized = self.unicodeScalars.filter { scalar in
+            // Garder les lettres, chiffres et underscores
+            return CharacterSet.letters.contains(scalar) ||
+                   CharacterSet.decimalDigits.contains(scalar) ||
+                   scalar == "_"
+        }
+        
+        // Convertir en String
+        var result = String(String.UnicodeScalarView(sanitized))
+        
+        // Si le premier caractère est un chiffre, ajouter un underscore devant
+        if let first = result.first, first.isNumber {
+            result = "_" + result
+        }
+        
+        return result
+    }
 }

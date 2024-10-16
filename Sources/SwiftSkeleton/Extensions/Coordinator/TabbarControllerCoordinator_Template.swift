@@ -12,6 +12,9 @@ enum TabConfiguration {
     case coordinator(coordinator : Coordinator)
 }
 
+
+// TabBarCoordinator only supports flow on children
+
 class TabbarControllerCoordinator_Template {
     
     var tabs : [TabConfiguration]

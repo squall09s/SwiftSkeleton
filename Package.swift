@@ -11,12 +11,14 @@ let package = Package(
     products: [
         .executable(name: "SwiftSkeleton", targets: ["SwiftSkeleton"]),
     ],
+    dependencies: [
+    ],
     targets: [
             .executableTarget(
                 name: "SwiftSkeleton",
                 dependencies: [],
                 resources: [
-                        .process("Ressources/")
+                    .process("Ressources/")
                 ]
             ),
             .testTarget(
