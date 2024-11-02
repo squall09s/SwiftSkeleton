@@ -40,4 +40,9 @@ class --#fileName#--: Coordinator {
 
     }
     
+    deinit {
+        print("Deinitialized --#fileName#--")
+    }
+    
+    
 }

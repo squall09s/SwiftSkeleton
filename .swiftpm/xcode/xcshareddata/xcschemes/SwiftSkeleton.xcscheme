@@ -64,7 +64,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/nicolas.laurent/Desktop/MyChallengesApp/config.json"
+            argument = "/Users/nicolas.laurent/Documents/GitHub/MyChallengesApp/config.json"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

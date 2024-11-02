@@ -10,6 +10,7 @@ import UIKit
 class Coordinator: AnyObject {
     
     weak var parentCoordinator: Coordinator?
+    var childCoordinator : Coordinator?
     
     func rootViewController() -> UIViewController? {
         return nil
@@ -19,20 +20,29 @@ class Coordinator: AnyObject {
         
     }
     
-    func navigate(to destination: Coordinator){
+    func navigate(to destination: Coordinator, transition : UIModalPresentationStyle = .fullScreen){
         
         destination.start()
         
         if let destinationRootViewController = destination.rootViewController(){
-            destinationRootViewController.modalPresentationStyle = .fullScreen
+            destination.parentCoordinator = self
+            self.childCoordinator = destination
+            destinationRootViewController.modalPresentationStyle = transition
             self.rootViewController()?.present(destinationRootViewController, animated: true)
         }
         
     }
     
     func finish(){
+        
+        self.parentCoordinator?.childCoordinator = nil
         self.parentCoordinator = nil
+        
+        self.childCoordinator?.parentCoordinator?.finish()
+        self.childCoordinator = nil
+        
         self.rootViewController()?.dismiss(animated: true)
+        
     }
     
     func back(){
@@ -42,8 +52,12 @@ class Coordinator: AnyObject {
         }else {
             finish()
         }
-          
     }
+    
+    deinit {
+        print("Deinitialized AppCoordinator")
+    }
+    
     
     
 }
@@ -79,10 +93,12 @@ class AppCoordinator: Coordinator {
     }
     
     func showCoordinator( coordinator : AppCoordinatorChild) {
-        let controller = coordinator.initialize()
-        controller.parentCoordinator = self
-        controller.start()
-        window.rootViewController = controller.rootViewController()
+        
+        let _coordinator = coordinator.initialize()
+        self.childCoordinator = _coordinator
+        _coordinator.parentCoordinator = self
+        _coordinator.start()
+        window.rootViewController = _coordinator.rootViewController()
         window.makeKeyAndVisible()
     }
    

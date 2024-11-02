@@ -54,14 +54,14 @@ class NavigationControllerCoordinator_Template {
         return self.childs.map({ (child) -> String in
             
             return """
-                //custom 
-                func goTo\(child.identifier())() {
-                    // Naviguer vers l'écran \(child.identifier())
-                    let model = \(child.identifier())ViewModel(title: "Login", description: "Please enter your credentials to reconnect.")
-                    let viewController = \(child.identifier())Builder.build(model: model, coordinator: self)
-                    navigationController.pushViewController(viewController, animated: true)
+                
+            func goTo\(child.identifier())() {
+                // Naviguer vers l'écran \(child.identifier())
+                let model = \(child.identifier())ViewModel(title: "Login", description: "Please enter your credentials to reconnect.")
+                let viewController = \(child.identifier())Builder.build(model: model, coordinator: self)
+                navigationController.pushViewController(viewController, animated: true)
 
-                }
+            }
 
             """
             
@@ -72,15 +72,15 @@ class NavigationControllerCoordinator_Template {
     func generateRootInitialization() -> String {
         
         return """
-            //custom 
-            override func start() {
+            
+        override func start() {
 
-                // Démarrer la navigation avec l'écran root
-                let model = \(root.identifier())ViewModel(title: "Disconnected", description: "You are disconnected from the server.")
-                let viewController = \(root.identifier())Builder.build(model: model, coordinator: self)
-                navigationController.pushViewController(viewController, animated: false)
+            // Démarrer la navigation avec l'écran root
+            let model = \(root.identifier())ViewModel(title: "Disconnected", description: "You are disconnected from the server.")
+            let viewController = \(root.identifier())Builder.build(model: model, coordinator: self)
+            navigationController.pushViewController(viewController, animated: false)
 
-            }
+        }
 
         """
             

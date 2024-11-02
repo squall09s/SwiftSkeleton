@@ -35,7 +35,7 @@ class Presenter_template : ModuleTemplate {
         
         if let extensions, let coordinator = extensions.coordinator {
             if case .navigationController = coordinator.type {
-                extensionCoordinator = "var coordinator : \(coordinator.fileName())?"
+                extensionCoordinator = "weak var coordinator : \(coordinator.fileName())?"
             }
         }
         

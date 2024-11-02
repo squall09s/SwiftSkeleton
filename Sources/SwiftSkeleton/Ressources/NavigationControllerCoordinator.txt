@@ -22,5 +22,8 @@ class --#fileName#--: Coordinator {
     --#rootInitialization#--
     
     --#childsInitialization#--
+    deinit {
+        print("Deinitialized --#fileName#--")
+    }
     
 }
